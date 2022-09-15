@@ -13,9 +13,14 @@ interface Result {
   scripts?: ScriptItem[]
 }
 
-function extractInfo(data) {
+function extractInfo(data: string) {
   const info = data.trim().slice(1, -1) // remove brackets: length: 03:06
-  return info.split(': ')
+  const firstColonIndex = info.indexOf(':')
+  
+  return [
+    info.substring(0, firstColonIndex).trim(), 
+    info.substring(firstColonIndex + 1).trim()
+  ]
 }
 
 function lrcParser(data) {
