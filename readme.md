@@ -5,7 +5,7 @@
 Parse LRC file into json format, works on both node and browser
 ## Install
 ```
-$ npm install lrc-parser
+$ npm install lrc-parser-ts
 ```
 
 ## Usage
