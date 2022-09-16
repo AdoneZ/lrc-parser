@@ -1,3 +1,16 @@
+/**
+ * lrc script item
+ */
+export type ScriptItem = {start: number, text: string, end: number}
+
+/**
+ * lrc transfer return type
+ */
+export interface LrcJsonData {
+  [key: string]: any
+  scripts?: ScriptItem[]
+}
+
 const EOL = typeof window === 'undefined' ? require('os').EOL : '\n'
 
 /**
@@ -6,12 +19,6 @@ const EOL = typeof window === 'undefined' ? require('os').EOL : '\n'
  * @example [length: 03:36]
  * @return {<Array>{string}} ['length', '03:06']
  */
-
-type ScriptItem = {start: number, text: string, end: number}
-interface Result {
-  [key: string]: any
-  scripts?: ScriptItem[]
-}
 
 function extractInfo(data: string) {
   const info = data.trim().slice(1, -1) // remove brackets: length: 03:06
@@ -23,7 +30,7 @@ function extractInfo(data: string) {
   ]
 }
 
-function lrcParser(data) {
+function lrcParser(data: string) {
   if (typeof data !== 'string') {
     throw new TypeError('expect first argument to be a string')
   }
@@ -35,10 +42,9 @@ function lrcParser(data) {
   const timeEnd = timeStart
   const startAndText = new RegExp(timeStart.source + scriptText.source)
 
-
   const infos:string[] = []
   const scripts: ScriptItem[] = []
-  const result: Result = {}
+  const result: LrcJsonData = {}
 
   for(let i = 0; startAndText.test(lines[i]) === false; i++) {
     infos.push(lines[i])
@@ -85,4 +91,4 @@ function convertTime(string) {
   return seconds
 }
 
-module.exports = lrcParser
+export default lrcParser
