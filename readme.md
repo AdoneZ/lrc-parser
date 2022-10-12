@@ -10,27 +10,15 @@ $ npm install lrc-parser-ts
 
 ## Usage
 
-### Node
-```js
-const lrcParser = require('lrc-parser')
-const fs = require('fs')
-
-fs.readFile('havana.lrc', (err, data) => {
-  const data = lrcParser(data.toString('utf8'))
-})
-
-```
-
 ### Browser
-```js
-const file = ...
-const fileReader = new FileReader()
+```ts
+import lrcParser, { LrcJsonData } from 'lrc-parser-ts';
 
-fileReader.addEventListener('load', e => {
-  const data = lrcParser(e.target.result)
-})
-
-fileReader.readAsText(file)
+const getLrcJson = async (url: string): LrcJsonData => {
+  const result = await fetch(url);
+  const text = await result.text();
+  return lrcParser(text);
+};
 ```
 ```
 havana.lrc
